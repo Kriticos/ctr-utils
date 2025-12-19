@@ -1,0 +1,24 @@
+services:
+  zbx-server:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ${RELEASE}
+    container_name: ${SRV_NAME}
+    volumes:
+      - ${VOL_SCRIPTS}
+      - ${VOL_CRON}
+      - ${VOL_DOCKER_SOCK}
+      - ${VOL_DOCKER_BIN}
+      - ${VOL_LOCALTIME}
+    networks:
+      network-share:
+        ipv4_address: ${CONTAINER_IP}
+    restart: unless-stopped
+    entrypoint: ["/usr/local/bin/scripts/entrypoint.sh"]
+networks:
+  network-share:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}
