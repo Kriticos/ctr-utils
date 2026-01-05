@@ -1,5 +1,5 @@
 services:
-  zbx-server:
+  ctr-utils:
     build:
       context: .
       dockerfile: Dockerfile
