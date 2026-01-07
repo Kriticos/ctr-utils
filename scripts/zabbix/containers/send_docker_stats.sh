@@ -77,13 +77,13 @@ while IFS="|" read -r name cpu mem netio blockio pids; do
     # -----------------------
     # ENVIO ZABBIX
     # -----------------------
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k system.cpu.util -o "$cpu_value"     > /dev/null
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k vm.memory.util  -o "$mem_used_bytes" > /dev/null
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k net.rx          -o "$rx_b"           > /dev/null
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k net.tx          -o "$tx_b"           > /dev/null
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k block.read      -o "$rd_b"           > /dev/null
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k block.write     -o "$wr_b"           > /dev/null
-    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.pids  -o "$pids"           > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.cpu.util              -o "$cpu_value"     > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.memory.util           -o "$mem_used_bytes" > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.net.rx.bytes          -o "$rx_b"           > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.net.tx.bytes          -o "$tx_b"           > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.disk.read.bytes       -o "$rd_b"           > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.disk.write.bytes      -o "$wr_b"           > /dev/null
+    zabbix_sender -z "$ZABBIX_SERVER" -s "$name" -k container.pids                  -o "$pids"           > /dev/null
 
     echo "Enviado: $name | CPU=${cpu_value}% | RAM=${mem_used_bytes}B | RX=${rx_b}B | TX=${tx_b}B | RD=${rd_b}B | WR=${wr_b}B | PIDs=$pids"
   fi
