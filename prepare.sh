@@ -2,13 +2,10 @@
 
 echo "📁 Iniciando preparação das pastas do ambiente..."
 
-# Detecta o diretório base automaticamente
-BASE_DIR="$(dirname "$(realpath "$0")")"
-
 # Pastas de dados (volumes persistentes)
 DATA_DIRS=(
-  "$BASE_DIR/scripts"
-  "$BASE_DIR/cron"
+  "./scripts"
+  "./cron"
 )
 
 # Pastas de backups
@@ -27,7 +24,7 @@ for DIR in "${DATA_DIRS[@]}" "${DATABASES_DIRS[@]}" "${BACKUP_DIRS[@]}"; do
 done
 
 echo "🔧 Ajustando permissões..."
-chmod +x "$BASE_DIR/scripts/"*.sh
+find ./scripts -type f -name "*.sh" -exec chmod +x {} \;
 
 # Configurando rede Docker personalizada
 if ! docker network ls | grep -q "network-share"; then

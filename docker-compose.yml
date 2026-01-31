@@ -5,20 +5,24 @@ services:
       dockerfile: Dockerfile
     image: ${RELEASE}
     container_name: ${SRV_NAME}
+    environment:
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PORT=${MYSQL_PORT}
+      - MYSQL_USER=${MYSQL_USER}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - ${VOL_SCRIPTS}
       - ${VOL_CRON}
+      - ${VOL_CSV}
       - ${VOL_DOCKER_SOCK}
       - ${VOL_DOCKER_BIN}
       - ${VOL_LOCALTIME}
     networks:
       network-share:
         ipv4_address: ${CONTAINER_IP}
-    restart: unless-stopped
+    restart: ${RESTART_POLICY:-unless-stopped}
     entrypoint: ["/usr/local/bin/scripts/entrypoint.sh"]
 networks:
   network-share:
+    name: ${NETWORK_NAME}
     external: true
-    ipam:
-      config:
-        - subnet: ${SUBNET}
